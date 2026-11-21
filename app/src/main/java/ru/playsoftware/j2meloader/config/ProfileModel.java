@@ -197,13 +197,13 @@ public class ProfileModel {
 		touchInput = true;
 
 		vkButtonShape = VirtualKeyboard.ROUND_RECT_SHAPE;
-		vkAlpha = 64;
+		vkAlpha = 96;
 
-		vkBgColor = 0xD0D0D0;
-		vkFgColor = 0x000080;
-		vkBgColorSelected = 0x000080;
-		vkFgColorSelected = 0xFFFFFF;
-		vkOutlineColor = 0xFFFFFF;
+		vkBgColor = 0x3A3F5C;
+		vkFgColor = 0xE1E0FF;
+		vkBgColorSelected = 0xBDC2FF;
+		vkFgColorSelected = 0x1B2488;
+		vkOutlineColor = 0xBDC2FF;
 		systemProperties = ContextHolder.getAssetAsString("defaults/system.props");
 	}
 }

@@ -10,6 +10,8 @@ Fork não oficial do [J2ME Loader](https://github.com/nikita36078/J2ME-Loader), 
 - Biblioteca de jogos com cartões e ícones maiores
 - Abas **Todos / Favoritos / Recentes**
 - Painel de **detalhes** do jogo (ícone, autor, versão, última vez jogado)
+- **Configurações** reorganizadas em grupos (Aparência, Tela do jogo, Dados e armazenamento), com ícones na cor do tema
+- Nova paleta padrão para os **controles virtuais** (vale para perfis novos)
 - Relatórios de erro **salvos localmente** em um arquivo, sem envio para nenhum servidor
 - Pode ser instalado ao lado do J2ME Loader original (o app tem outro ID: `io.github.caua299.midlethub`)
 
@@ -32,9 +34,8 @@ O APK sai em `app/build/outputs/apk/dev/debug/`. É preciso JDK 21 e o Android S
 
 ## Em desenvolvimento
 
-- Configurações redesenhadas
-- Controles virtuais com novo visual
-- Save states, captura de tela, overlay de FPS e backup
+- Save states
+- Tela de configuração por jogo redesenhada
 
 ## Créditos e licença
 
@@ -55,6 +56,8 @@ MIDlet Hub is an unofficial fork of [J2ME Loader](https://github.com/nikita36078
 - Game library with cards and larger icons
 - **All / Favorites / Recent** tabs
 - Game **details** sheet (icon, author, version, last played)
+- **Settings** reorganized into groups (Appearance, Game screen, Data and storage), with theme-colored icons
+- New default palette for the **virtual controls** (applies to new profiles)
 - Crash reports **saved locally** to a file, nothing is sent to any server
 - Installs alongside the original J2ME Loader (different app ID: `io.github.caua299.midlethub`)
 

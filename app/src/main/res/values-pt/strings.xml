@@ -168,4 +168,8 @@
     <string name="details_play">Jogar</string>
     <string name="details_last_played">Última vez jogado: %1$s</string>
     <string name="details_never_played">Nunca jogado</string>
+
+    <string name="pref_category_appearance">Aparência</string>
+    <string name="pref_category_game">Tela do jogo</string>
+    <string name="pref_category_data">Dados e armazenamento</string>
 </resources>

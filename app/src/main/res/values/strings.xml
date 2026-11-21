@@ -319,4 +319,8 @@
 
     <string name="about_fork" translatable="false">&lt;BR>Unofficial fork with a modernized interface.&lt;BR>GitHub: &lt;a href="https://github.com/Caua299/MIDlet-Hub">github.com/Caua299/MIDlet-Hub&lt;/a></string>
     <string name="about_original" translatable="false">&lt;BR>&lt;BR>Based on J2ME Loader by Nikita Shakarun:&lt;BR>&lt;a href="https://github.com/nikita36078/J2ME-Loader">github.com/nikita36078/J2ME-Loader&lt;/a></string>
+
+    <string name="pref_category_appearance">Appearance</string>
+    <string name="pref_category_game">Game screen</string>
+    <string name="pref_category_data">Data and storage</string>
 </resources>
