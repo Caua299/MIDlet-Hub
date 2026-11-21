@@ -156,4 +156,16 @@
     <string name="error_name_exists">Já existe, digite outro nome</string>
     <string name="default_label">"%s (padrão)"</string>
     <string name="not_saved_exists">Já existe</string>
+
+    <string name="tab_all">Todos</string>
+    <string name="tab_favorites">Favoritos</string>
+    <string name="tab_recent">Recentes</string>
+    <string name="tab_empty_favorites">Nenhum favorito ainda. Toque e segure um jogo e escolha “Adicionar aos favoritos”.</string>
+    <string name="tab_empty_recent">Nenhum jogo jogado recentemente.</string>
+    <string name="action_context_favorite">Adicionar aos favoritos</string>
+    <string name="action_context_unfavorite">Remover dos favoritos</string>
+    <string name="action_context_details">Detalhes</string>
+    <string name="details_play">Jogar</string>
+    <string name="details_last_played">Última vez jogado: %1$s</string>
+    <string name="details_never_played">Nunca jogado</string>
 </resources>

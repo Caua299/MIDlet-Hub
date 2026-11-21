@@ -108,6 +108,14 @@ public class AppRepository implements SharedPreferences.OnSharedPreferenceChange
 		execute(appItemDao.update(item));
 	}
 
+	public void setFavorite(int id, boolean favorite) {
+		execute(appItemDao.setFavorite(id, favorite));
+	}
+
+	public void markPlayed(int id) {
+		execute(appItemDao.markPlayed(id, System.currentTimeMillis()));
+	}
+
 	public void delete(AppItem item) {
 		execute(appItemDao.delete(item));
 	}

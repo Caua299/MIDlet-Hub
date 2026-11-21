@@ -19,6 +19,7 @@ package ru.playsoftware.j2meloader.applist;
 
 import android.content.Context;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
@@ -34,6 +35,10 @@ public class AppItem {
 	private final String author;
 	private final String version;
 	private final String path;
+	@ColumnInfo(defaultValue = "0")
+	private boolean favorite;
+	@ColumnInfo(defaultValue = "0")
+	private long lastPlayed;
 
 	public AppItem(String path, String title, String author, String version) {
 		this.path = path;
@@ -76,6 +81,22 @@ public class AppItem {
 
 	public String getVersion() {
 		return version;
+	}
+
+	public boolean isFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(boolean favorite) {
+		this.favorite = favorite;
+	}
+
+	public long getLastPlayed() {
+		return lastPlayed;
+	}
+
+	public void setLastPlayed(long lastPlayed) {
+		this.lastPlayed = lastPlayed;
 	}
 
 	public String getPathExt() {

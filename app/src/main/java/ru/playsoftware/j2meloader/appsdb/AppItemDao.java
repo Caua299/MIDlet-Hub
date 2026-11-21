@@ -57,6 +57,12 @@ public interface AppItemDao {
 	@Delete
 	Completable delete(List<AppItem> items);
 
+	@Query("UPDATE apps SET favorite = :favorite WHERE id = :id")
+	Completable setFavorite(int id, boolean favorite);
+
+	@Query("UPDATE apps SET lastPlayed = :time WHERE id = :id")
+	Completable markPlayed(int id, long time);
+
 	@Query("DELETE FROM apps")
 	Completable deleteAll();
 

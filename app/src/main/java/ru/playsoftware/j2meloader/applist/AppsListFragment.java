@@ -40,6 +40,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -73,6 +74,9 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.tabs.TabLayout;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -87,6 +91,7 @@ import ru.playsoftware.j2meloader.appsdb.AppRepository;
 import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.config.ConfigActivity;
 import ru.playsoftware.j2meloader.config.ProfilesActivity;
+import ru.playsoftware.j2meloader.databinding.DialogAppDetailsBinding;
 import ru.playsoftware.j2meloader.databinding.FragmentAppsListBinding;
 import ru.playsoftware.j2meloader.info.AboutDialogFragment;
 import ru.playsoftware.j2meloader.info.HelpDialogFragment;
@@ -147,6 +152,22 @@ public class AppsListFragment extends Fragment implements MenuProvider {
 		menuHost.addMenuProvider(this, getViewLifecycleOwner());
 
 		adapter.setEmptyView(binding.empty);
+		adapter.setLaunchListener(item -> appRepository.markPlayed(item.getId()));
+		adapter.setTab(binding.tabs.getSelectedTabPosition());
+		binding.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+			@Override
+			public void onTabSelected(TabLayout.Tab tab) {
+				adapter.setTab(tab.getPosition());
+			}
+
+			@Override
+			public void onTabUnselected(TabLayout.Tab tab) {
+			}
+
+			@Override
+			public void onTabReselected(TabLayout.Tab tab) {
+			}
+		});
 		int viewType = preferences.getInt(PREF_APPS_VIEW, AppsListAdapter.LAYOUT_TYPE_GRID);
 		int spanCount;
 		if (viewType == AppsListAdapter.LAYOUT_TYPE_GRID) {
@@ -262,6 +283,8 @@ public class AppsListFragment extends Fragment implements MenuProvider {
 		}
 
 		AppItem appItem = ((AppItemLayout.AppItemMenuInfo) menuInfo).appItem;
+		menu.findItem(R.id.action_context_favorite).setTitle(appItem.isFavorite()
+				? R.string.action_context_unfavorite : R.string.action_context_favorite);
 		if (!new File(appItem.getPathExt() + Config.MIDLET_RES_FILE).exists()) {
 			menu.findItem(R.id.action_context_reinstall).setVisible(false);
 		}
@@ -271,7 +294,11 @@ public class AppsListFragment extends Fragment implements MenuProvider {
 	public boolean onContextItemSelected(MenuItem item) {
 		AppItem appItem = ((AppItemLayout.AppItemMenuInfo) item.getMenuInfo()).appItem;
 		int itemId = item.getItemId();
-		if (itemId == R.id.action_context_shortcut) {
+		if (itemId == R.id.action_context_favorite) {
+			appRepository.setFavorite(appItem.getId(), !appItem.isFavorite());
+		} else if (itemId == R.id.action_context_details) {
+			showDetails(appItem);
+		} else if (itemId == R.id.action_context_shortcut) {
 			requestAddShortcut(appItem);
 		} else if (itemId == R.id.action_context_rename) {
 			alertRename(appItem);
@@ -285,6 +312,47 @@ public class AppsListFragment extends Fragment implements MenuProvider {
 			return super.onContextItemSelected(item);
 		}
 		return true;
+	}
+
+	private void showDetails(AppItem item) {
+		Context context = requireContext();
+		DialogAppDetailsBinding b = DialogAppDetailsBinding.inflate(LayoutInflater.from(context));
+		Drawable icon = Drawable.createFromPath(item.getImagePathExt());
+		if (icon != null) {
+			icon.setFilterBitmap(false);
+			b.detailsIcon.setImageDrawable(icon);
+		} else {
+			b.detailsIcon.setImageResource(R.mipmap.ic_launcher);
+		}
+		b.detailsTitle.setText(item.getTitle());
+		b.detailsAuthor.setText(item.getAuthorExt(context));
+		b.detailsVersion.setText(item.getVersionExt(context));
+		long last = item.getLastPlayed();
+		if (last > 0) {
+			CharSequence when = DateUtils.getRelativeTimeSpanString(last,
+					System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
+			b.detailsLastPlayed.setText(getString(R.string.details_last_played, when));
+		} else {
+			b.detailsLastPlayed.setText(R.string.details_never_played);
+		}
+		b.detailsFavorite.setText(item.isFavorite()
+				? R.string.action_context_unfavorite : R.string.action_context_favorite);
+		BottomSheetDialog dialog = new BottomSheetDialog(context);
+		dialog.setContentView(b.getRoot());
+		b.detailsPlay.setOnClickListener(v -> {
+			dialog.dismiss();
+			appRepository.markPlayed(item.getId());
+			Config.startApp(requireActivity(), item.getTitle(), item.getPathExt(), false);
+		});
+		b.detailsSettings.setOnClickListener(v -> {
+			dialog.dismiss();
+			Config.startApp(requireActivity(), item.getTitle(), item.getPathExt(), true);
+		});
+		b.detailsFavorite.setOnClickListener(v -> {
+			dialog.dismiss();
+			appRepository.setFavorite(item.getId(), !item.isFavorite());
+		});
+		dialog.show();
 	}
 
 	private void requestAddShortcut(AppItem appItem) {

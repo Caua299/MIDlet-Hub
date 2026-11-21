@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ru.playsoftware.j2meloader.R;
@@ -43,6 +44,14 @@ import ru.playsoftware.j2meloader.databinding.ListRowJarBinding;
 class AppsListAdapter extends ListAdapter<AppItem, AppsListAdapter.AppViewHolder> implements Filterable {
 	static final int LAYOUT_TYPE_LIST = 0;
 	static final int LAYOUT_TYPE_GRID = 1;
+	static final int TAB_ALL = 0;
+	static final int TAB_FAVORITES = 1;
+	static final int TAB_RECENT = 2;
+	private static final int RECENT_LIMIT = 30;
+
+	interface OnLaunchListener {
+		void onLaunch(AppItem item);
+	}
 
 	private final View.OnCreateContextMenuListener contextMenuListener;
 	private List<AppItem> list = new ArrayList<>();
@@ -50,6 +59,8 @@ class AppsListAdapter extends ListAdapter<AppItem, AppsListAdapter.AppViewHolder
 	private CharSequence filterConstraint;
 	private View emptyView;
 	private int layout = LAYOUT_TYPE_LIST;
+	private volatile int tab = TAB_ALL;
+	private OnLaunchListener launchListener;
 
 	AppsListAdapter(View.OnCreateContextMenuListener contextMenuListener) {
 		super(new DiffUtil.ItemCallback<AppItem>() {
@@ -61,7 +72,9 @@ class AppsListAdapter extends ListAdapter<AppItem, AppsListAdapter.AppViewHolder
 			@Override
 			public boolean areContentsTheSame(@NonNull AppItem oldItem, @NonNull AppItem newItem) {
 				return oldItem.getTitle().equals(newItem.getTitle()) &&
-						oldItem.getVersion().equals(newItem.getVersion());
+						oldItem.getVersion().equals(newItem.getVersion()) &&
+						oldItem.isFavorite() == newItem.isFavorite() &&
+						oldItem.getLastPlayed() == newItem.getLastPlayed();
 			}
 		});
 		this.contextMenuListener = contextMenuListener;
@@ -100,6 +113,15 @@ class AppsListAdapter extends ListAdapter<AppItem, AppsListAdapter.AppViewHolder
 		return appFilter;
 	}
 
+	void setLaunchListener(OnLaunchListener listener) {
+		this.launchListener = listener;
+	}
+
+	void setTab(int tab) {
+		this.tab = tab;
+		appFilter.filter(filterConstraint);
+	}
+
 	void setEmptyView(View emptyView) {
 		this.emptyView = emptyView;
 	}
@@ -128,6 +150,9 @@ class AppsListAdapter extends ListAdapter<AppItem, AppsListAdapter.AppViewHolder
 				AppsListAdapter adapter = (AppsListAdapter) getBindingAdapter();
 				if (adapter != null) {
 					AppItem item = adapter.getItem(getLayoutPosition());
+					if (adapter.launchListener != null) {
+						adapter.launchListener.onLaunch(item);
+					}
 					Config.startApp(v.getContext(), item.getTitle(), item.getPathExt(), false);
 				}
 			});
@@ -142,7 +167,7 @@ class AppsListAdapter extends ListAdapter<AppItem, AppsListAdapter.AppViewHolder
 			} else {
 				this.icon.setImageResource(R.mipmap.ic_launcher);
 			}
-			name.setText(item.getTitle());
+			name.setText(item.isFavorite() ? "\u2605 " + item.getTitle() : item.getTitle());
 			itemView.setTag(item);
 		}
 	}
@@ -170,12 +195,33 @@ class AppsListAdapter extends ListAdapter<AppItem, AppsListAdapter.AppViewHolder
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults results = new FilterResults();
+			List<AppItem> base = list;
+			int currentTab = tab;
+			if (currentTab == TAB_FAVORITES) {
+				base = new ArrayList<>();
+				for (AppItem item : list) {
+					if (item.isFavorite()) {
+						base.add(item);
+					}
+				}
+			} else if (currentTab == TAB_RECENT) {
+				base = new ArrayList<>();
+				for (AppItem item : list) {
+					if (item.getLastPlayed() > 0) {
+						base.add(item);
+					}
+				}
+				Collections.sort(base, (a, b) -> Long.compare(b.getLastPlayed(), a.getLastPlayed()));
+				if (base.size() > RECENT_LIMIT) {
+					base = new ArrayList<>(base.subList(0, RECENT_LIMIT));
+				}
+			}
 			if (isEmpty(constraint)) {
-				results.count = list.size();
-				results.values = list;
+				results.count = base.size();
+				results.values = base;
 			} else {
 				ArrayList<AppItem> resultList = new ArrayList<>();
-				for (AppItem item : list) {
+				for (AppItem item : base) {
 					if (item.getTitle().toLowerCase().contains(constraint) ||
 							item.getAuthor().toLowerCase().contains(constraint)) {
 						resultList.add(item);
@@ -201,6 +247,10 @@ class AppsListAdapter extends ListAdapter<AppItem, AppsListAdapter.AppViewHolder
 			} else {
 				if (list.isEmpty()) {
 					((TextView) emptyView).setText(R.string.no_data_for_display);
+				} else if (tab == TAB_FAVORITES && isEmpty(constraint)) {
+					((TextView) emptyView).setText(R.string.tab_empty_favorites);
+				} else if (tab == TAB_RECENT && isEmpty(constraint)) {
+					((TextView) emptyView).setText(R.string.tab_empty_recent);
 				} else {
 					String msg = emptyView.getResources().getString(R.string.msg_no_matches, constraint);
 					((TextView) emptyView).setText(msg);
