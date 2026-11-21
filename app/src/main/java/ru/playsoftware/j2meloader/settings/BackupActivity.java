@@ -106,7 +106,7 @@ public class BackupActivity extends BaseActivity {
 	}
 
 	private void openExportPicker() {
-		String name = "J2ME-Loader-backup-"
+		String name = "MIDlet-Hub-backup-"
 				+ new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(new Date()) + ".zip";
 		try {
 			exportLauncher.launch(name);

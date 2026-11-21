@@ -11,7 +11,7 @@ Fork não oficial do [J2ME Loader](https://github.com/nikita36078/J2ME-Loader), 
 - Abas **Todos / Favoritos / Recentes**
 - Painel de **detalhes** do jogo (ícone, autor, versão, última vez jogado)
 - Relatórios de erro **salvos localmente** em um arquivo, sem envio para nenhum servidor
-- Pode ser instalado ao lado do J2ME Loader original (o app tem outro ID: `com.modernloader.j2me`)
+- Pode ser instalado ao lado do J2ME Loader original (o app tem outro ID: `io.github.caua299.midlethub`)
 
 O emulador em si (compatibilidade com jogos 2D e 3D, teclado virtual, configurações por jogo) vem do projeto original.
 
@@ -56,7 +56,7 @@ MIDlet Hub is an unofficial fork of [J2ME Loader](https://github.com/nikita36078
 - **All / Favorites / Recent** tabs
 - Game **details** sheet (icon, author, version, last played)
 - Crash reports **saved locally** to a file, nothing is sent to any server
-- Installs alongside the original J2ME Loader (different app ID: `com.modernloader.j2me`)
+- Installs alongside the original J2ME Loader (different app ID: `io.github.caua299.midlethub`)
 
 The emulator itself (2D and 3D game compatibility, virtual keyboard, per-app settings) comes from the original project.
 
