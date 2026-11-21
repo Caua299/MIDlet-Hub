@@ -6,6 +6,10 @@ plugins {
 
 def midletArchivesBaseName
 
+// A versão pode ser definida pelo workflow de release (-PappVersionName / -PappVersionCode)
+def appVersionNameValue = (project.findProperty('appVersionName') ?: '1.0.0').toString()
+def appVersionCodeValue = Integer.parseInt((project.findProperty('appVersionCode') ?: '1000099').toString())
+
 android {
     compileSdk COMPILE_SDK
     ndkVersion NDK_VERSION
@@ -15,8 +19,8 @@ android {
         applicationId "io.github.caua299.midlethub"
         minSdk MIN_SDK
         targetSdk TARGET_SDK
-        versionCode 10000
-        versionName "1.0.0"
+        versionCode appVersionCodeValue
+        versionName appVersionNameValue
         resValue 'string', 'app_name', 'MIDlet Hub'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

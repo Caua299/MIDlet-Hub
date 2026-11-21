@@ -8,6 +8,7 @@ Primeira versão oficial do MIDlet Hub, um fork não oficial do [J2ME Loader](ht
 - Painel de detalhes do jogo (ícone, autor, versão, última vez jogado)
 - Pontos de save: guarde cópias do progresso salvo de cada jogo e restaure quando quiser
 - Configurações reorganizadas em grupos, com ícones na cor do tema
+- Tela de configuração por jogo com novo visual
 - Nova paleta padrão para os controles virtuais (vale para perfis novos)
 - Novo ícone do app
 - Relatórios de erro salvos localmente, sem envio para nenhum servidor
@@ -29,6 +30,7 @@ First official release of MIDlet Hub, an unofficial fork of [J2ME Loader](https:
 - Game details sheet (icon, author, version, last played)
 - Save points: keep copies of each game’s saved progress and restore them any time
 - Settings reorganized into groups, with theme-colored icons
+- Per-game configuration screen with a new look
 - New default palette for the virtual controls (new profiles)
 - New app icon
 - Crash reports saved locally, nothing is sent to any server

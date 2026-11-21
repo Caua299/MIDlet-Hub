@@ -13,6 +13,7 @@ Fork não oficial do [J2ME Loader](https://github.com/nikita36078/J2ME-Loader), 
 - Novo **ícone** do app
 - **Pontos de save:** guarde cópias do progresso salvo de cada jogo e restaure quando quiser
 - **Configurações** reorganizadas em grupos (Aparência, Tela do jogo, Dados e armazenamento), com ícones na cor do tema
+- Tela de **configuração por jogo** com novo visual (cartões com mais espaço e títulos de seção destacados)
 - Nova paleta padrão para os **controles virtuais** (vale para perfis novos)
 - Relatórios de erro **salvos localmente** em um arquivo, sem envio para nenhum servidor
 - Pode ser instalado ao lado do J2ME Loader original (o app tem outro ID: `io.github.caua299.midlethub`)
@@ -22,6 +23,8 @@ O emulador em si vem do projeto original: compatibilidade com jogos 2D e 3D, tec
 ## Download
 
 Baixe a versão oficial mais recente em [Releases](https://github.com/Caua299/MIDlet-Hub/releases/latest) (arquivo `MIDlet_Hub-x.y.z.apk`).
+
+Versões de teste com a mesma assinatura da oficial (tags como `v1.1.0-beta.1`) aparecem em Releases marcadas como **Pre-release**; elas atualizam por cima da versão oficial.
 
 Os APKs de teste, gerados automaticamente a cada mudança, ficam em [Latest debug build](https://github.com/Caua299/MIDlet-Hub/releases/tag/latest-debug). São versões de desenvolvimento e podem ter erros.
 
@@ -35,7 +38,8 @@ O APK sai em `app/build/outputs/apk/dev/debug/`. É preciso JDK 21 e o Android S
 
 ## Em desenvolvimento
 
-- Tela de configuração por jogo redesenhada
+- Tempo jogado e ordenação por último jogado
+- Botão para compartilhar relatórios de erro
 
 ## Créditos e licença
 
@@ -59,6 +63,7 @@ MIDlet Hub is an unofficial fork of [J2ME Loader](https://github.com/nikita36078
 - New app **icon**
 - **Save points:** keep copies of each game’s saved progress and restore them any time
 - **Settings** reorganized into groups (Appearance, Game screen, Data and storage), with theme-colored icons
+- Per-game **configuration screen** with a new look (cards with more room and highlighted section titles)
 - New default palette for the **virtual controls** (applies to new profiles)
 - Crash reports **saved locally** to a file, nothing is sent to any server
 - Installs alongside the original J2ME Loader (different app ID: `io.github.caua299.midlethub`)
@@ -68,6 +73,8 @@ The emulator itself comes from the original project: 2D and 3D game compatibilit
 ### Download
 
 Get the latest official version from [Releases](https://github.com/Caua299/MIDlet-Hub/releases/latest) (file `MIDlet_Hub-x.y.z.apk`).
+
+Test versions signed with the same key as the official one (tags like `v1.1.0-beta.1`) appear in Releases marked as **Pre-release**; they install over the official version.
 
 Test APKs, built automatically on every change, are published as [Latest debug build](https://github.com/Caua299/MIDlet-Hub/releases/tag/latest-debug). They are development builds and may contain bugs.
 
