@@ -17,7 +17,7 @@ android {
         targetSdk TARGET_SDK
         versionCode 101
         versionName "1.8.2"
-        resValue 'string', 'app_name', 'J2ME Modern'
+        resValue 'string', 'app_name', 'MIDlet Hub'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -143,7 +143,7 @@ androidComponents {
         if (variant.buildType == 'debug' && variant.flavorName != 'midlet') {
             variant.resValues.put(
                     variant.makeResValueKey('string', 'app_name'),
-                    new ResValue('J2ME Modern Debug', null))
+                    new ResValue('MIDlet Hub Debug', null))
         }
         def baseName = variant.flavorName == 'midlet' ? "${midletArchivesBaseName}-" : "${rootProject.name}-"
         variant.outputs.each { output ->

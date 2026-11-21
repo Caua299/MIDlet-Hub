@@ -1,40 +1,80 @@
-# J2ME-Loader 
+# MIDlet Hub
 
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/j2me-loader/localized.svg)](https://crowdin.com/project/j2me-loader)
-[![GitHub release](https://img.shields.io/github/release/nikita36078/J2ME-Loader.svg)](https://github.com/nikita36078/J2ME-Loader/releases)
+**Português** | [English](#english)
 
-J2ME-Loader is a J2ME emulator for Android. It supports most 2D and 3D games (including Mascot Capsule 3D ones). Emulator has a virtual keyboard, individual settings for each application, scaling support.
-This project is a fork of [J2meLoader](https://github.com/NaikSoftware/J2meLoader).  
-Special thanks to [woesss](https://github.com/woesss), the author of [JL-Mod](https://github.com/woesss/JL-Mod), for creating open-source Mascot Capsule implementation, soundbank support and many other improvements.
+Fork não oficial do [J2ME Loader](https://github.com/nikita36078/J2ME-Loader), um emulador de jogos e apps J2ME (Java ME) para Android, com interface modernizada.
 
-System requirements: Android 4.0+  
-[4PDA discussion](https://4pda.to/forum/index.php?showtopic=824201)  
-[XDA-Developers](https://forum.xda-developers.com/android/apps-games/app-j2me-loader-t3777889)  
-[EmuGen wiki](https://emulation.gametechwiki.com/index.php/J2ME_Loader)  
-[Discord](https://discord.gg/Ag4rcpz)  
-[Automated builds](https://github.com/nikita36078/J2ME-Loader/releases/tag/continuous)
+## O que muda neste fork
 
-<a href="https://play.google.com/store/apps/details?id=ru.playsoftware.j2meloader">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="75"></a>
-<a href="https://f-droid.org/app/ru.playsoftware.j2meloader">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="75"></a>
+- Interface em **Material 3**, com cores dinâmicas (Material You) no Android 12+ e modo AMOLED
+- Biblioteca de jogos com cartões e ícones maiores
+- Abas **Todos / Favoritos / Recentes**
+- Painel de **detalhes** do jogo (ícone, autor, versão, última vez jogado)
+- Relatórios de erro **salvos localmente** em um arquivo, sem envio para nenhum servidor
+- Pode ser instalado ao lado do J2ME Loader original (o app tem outro ID: `com.modernloader.j2me`)
 
-## Compatibility
-[List of the tested Java Games (Touchscreen)](https://github.com/nikita36078/J2ME-Loader/wiki/List-of-Tested-Java-Games-(Touchscreen))  
-[List of the tested Java Games (Non Touchscreen)](https://github.com/nikita36078/J2ME-Loader/wiki/List-of-Tested-Java-Games-(Non-Touchscreen))  
-[List of the Java Games with Bugs](https://github.com/nikita36078/J2ME-Loader/wiki/List-of-Java-Games-with-Bugs)
+O emulador em si (compatibilidade com jogos 2D e 3D, teclado virtual, configurações por jogo) vem do projeto original.
 
-## Tips
- - Enabling filtering in some cases can greatly reduce performance. Disable this option if game is too slow.
- - Image flickering issues can be fixed by enabling the "Immediate processing mode" option.
+## Download
 
-## Screenshots
+Os APKs de teste são gerados automaticamente pelo GitHub Actions.
+Baixe o mais recente em [Releases → Latest debug build](https://github.com/Caua299/MIDlet-Hub/releases/tag/latest-debug).
 
-<img src="/screenshots/screen.jpg" width="288" height="512"> <img src="/screenshots/screen2.jpg" width="288" height="512">
-<img src="/screenshots/screen3.jpg" width="288" height="512"> <img src="/screenshots/screen4.jpg" width="288" height="512">
-* For more screenshots check out the [wiki](https://emulation.gametechwiki.com/index.php/J2ME_Loader#Screenshots)
+> São versões de teste (debug). Podem ter erros.
 
-## License
-> Copyright 2017-2026 Nikita Shakarun.
-> Licensed under the [Apache License, Version 2.0.](http://www.apache.org/licenses/LICENSE-2.0)  
-> (See the [LICENSE](https://github.com/nikita36078/J2ME-Loader/blob/master/LICENSE) file for the whole license text.)
+## Como compilar
+
+```
+./gradlew assembleDevDebug
+```
+
+O APK sai em `app/build/outputs/apk/dev/debug/`. É preciso JDK 21 e o Android SDK com o NDK instalado.
+
+## Em desenvolvimento
+
+- Configurações redesenhadas
+- Controles virtuais com novo visual
+- Save states, captura de tela, overlay de FPS e backup
+
+## Créditos e licença
+
+Baseado no [J2ME Loader](https://github.com/nikita36078/J2ME-Loader) de Nikita Shakarun, que por sua vez é um fork do [J2meLoader](https://github.com/NaikSoftware/J2meLoader). Agradecimentos a [woesss](https://github.com/woesss) ([JL-Mod](https://github.com/woesss/JL-Mod)) pela implementação de Mascot Capsule e outras melhorias.
+
+> Copyright 2017-2026 Nikita Shakarun. Licenciado sob a [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+> Este fork contém modificações. Veja o arquivo [LICENSE](LICENSE) para o texto completo da licença.
+
+---
+
+## English
+
+MIDlet Hub is an unofficial fork of [J2ME Loader](https://github.com/nikita36078/J2ME-Loader), a J2ME (Java ME) games and apps emulator for Android, with a modernized interface.
+
+### What is different in this fork
+
+- **Material 3** interface with dynamic colors (Material You) on Android 12+ and an AMOLED mode
+- Game library with cards and larger icons
+- **All / Favorites / Recent** tabs
+- Game **details** sheet (icon, author, version, last played)
+- Crash reports **saved locally** to a file, nothing is sent to any server
+- Installs alongside the original J2ME Loader (different app ID: `com.modernloader.j2me`)
+
+The emulator itself (2D and 3D game compatibility, virtual keyboard, per-app settings) comes from the original project.
+
+### Download
+
+Test APKs are built automatically by GitHub Actions. Get the latest one from [Releases → Latest debug build](https://github.com/Caua299/MIDlet-Hub/releases/tag/latest-debug). These are debug builds and may contain bugs.
+
+### Building
+
+```
+./gradlew assembleDevDebug
+```
+
+Requires JDK 21 and the Android SDK with the NDK installed. The APK is written to `app/build/outputs/apk/dev/debug/`.
+
+### Credits and license
+
+Based on [J2ME Loader](https://github.com/nikita36078/J2ME-Loader) by Nikita Shakarun. Thanks to [woesss](https://github.com/woesss) for the Mascot Capsule implementation and other improvements.
+
+> Copyright 2017-2026 Nikita Shakarun. Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+> This fork contains modifications. See the [LICENSE](LICENSE) file for the full license text.

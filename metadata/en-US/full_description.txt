@@ -1,4 +1,5 @@
-J2ME Loader is a J2ME emulator for Android. It supports most 2D and 3D games (including Mascot Capsule 3D ones).
-Emulator has a virtual keyboard, individual settings for each application, scaling support. This project is a fork of J2meLoader.
+MIDlet Hub is an unofficial fork of J2ME Loader, a J2ME emulator for Android. It runs most 2D and 3D games (including Mascot Capsule 3D ones), with a virtual keyboard, per-app settings and scaling support.
 
-Translations page: https://crowdin.com/project/j2me-loader
+What is new in this fork: Material 3 interface with dynamic colors, game library with cards, Favorites and Recent tabs, a game details sheet, and crash reports saved locally (nothing is sent to any server).
+
+Based on J2ME Loader by Nikita Shakarun, licensed under Apache 2.0.
