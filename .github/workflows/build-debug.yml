@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
-      - main
+      - '**'
 
 permissions:
   contents: write
@@ -75,20 +74,34 @@ jobs:
           name: apk-debug
           path: dist/*.apk
 
+      - name: Define release tag
+        id: tag
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          if [ "$BRANCH" = "master" ] || [ "$BRANCH" = "main" ]; then
+            echo "name=latest-debug" >> "$GITHUB_OUTPUT"
+            echo "title=Latest debug build" >> "$GITHUB_OUTPUT"
+          else
+            SAFE=$(echo "$BRANCH" | sed 's#[^A-Za-z0-9._-]#-#g')
+            echo "name=debug-$SAFE" >> "$GITHUB_OUTPUT"
+            echo "title=Debug build ($BRANCH)" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Recreate tag
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           base="repos/$GITHUB_REPOSITORY/git"
-          gh api -X DELETE "$base/refs/tags/latest-debug" >/dev/null 2>&1 || true
-          gh api -X POST "$base/refs" -f ref="refs/tags/latest-debug" -f sha="$GITHUB_SHA" >/dev/null
+          gh api -X DELETE "$base/refs/tags/${{ steps.tag.outputs.name }}" >/dev/null 2>&1 || true
+          gh api -X POST "$base/refs" -f ref="refs/tags/${{ steps.tag.outputs.name }}" -f sha="$GITHUB_SHA" >/dev/null
 
       - name: Publish release with APK
         uses: ncipollo/release-action@v1
         with:
-          tag: latest-debug
+          tag: ${{ steps.tag.outputs.name }}
           commit: ${{ github.sha }}
-          name: Latest debug build
+          name: ${{ steps.tag.outputs.title }}
           body: APK de teste gerado automaticamente a partir do último commit.
           prerelease: true
           allowUpdates: true
