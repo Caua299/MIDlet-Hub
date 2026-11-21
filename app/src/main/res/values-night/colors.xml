@@ -12,4 +12,13 @@
     <color name="config_card">#262e37</color>
 
     <color name="nnf_separator_color">@color/nnf_dark_separator_color</color>
+
+    <!--Material 3 (seed #525AA0) - dark-->
+    <color name="md_primary">#BDC2FF</color>
+    <color name="md_on_primary">#1B2488</color>
+    <color name="md_primary_container">#343D88</color>
+    <color name="md_on_primary_container">#E1E0FF</color>
+    <color name="md_secondary">#C4C5DD</color>
+    <color name="md_secondary_container">#444559</color>
+    <color name="md_tertiary">#E8B9D5</color>
 </resources>

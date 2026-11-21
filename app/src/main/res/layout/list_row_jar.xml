@@ -2,21 +2,22 @@
 <ru.playsoftware.j2meloader.applist.AppItemLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:background="?android:selectableItemBackground"
-    android:padding="10dp"
+    android:background="@drawable/bg_app_item"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="4dp"
+    android:padding="12dp"
     android:focusable="true"
     tools:showIn="@layout/fragment_apps_list">
 
     <ImageView
         android:id="@+id/list_image"
-        android:layout_width="36dip"
-        android:layout_height="36dip"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
         android:scaleType="centerCrop"
         tools:src="@mipmap/ic_launcher" />
 
@@ -31,7 +32,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearance"
-            android:textSize="15sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
             android:textStyle="bold"
             tools:text="Example MIDlet Name" />
 

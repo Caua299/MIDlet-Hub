@@ -294,13 +294,13 @@ public class MicroActivity extends AppCompatActivity {
 				.setItems(names, (d, n) -> {
 					String clazz = classes[n];
 					ErrorReporter errorReporter = ACRA.getErrorReporter();
-					String report = errorReporter.getCustomData(Constants.KEY_APPCENTER_ATTACHMENT);
+					String report = errorReporter.getCustomData(Constants.KEY_CRASH_ATTACHMENT);
 					StringBuilder sb = new StringBuilder();
 					if (report != null) {
 						sb.append(report).append("\n");
 					}
 					sb.append("Begin app: ").append(names[n]).append(", ").append(clazz);
-					errorReporter.putCustomData(Constants.KEY_APPCENTER_ATTACHMENT, sb.toString());
+					errorReporter.putCustomData(Constants.KEY_CRASH_ATTACHMENT, sb.toString());
 					MidletThread.create(microLoader, clazz);
 					MidletThread.resumeApp();
 				})

@@ -150,7 +150,7 @@ public class AppsListFragment extends Fragment implements MenuProvider {
 		int viewType = preferences.getInt(PREF_APPS_VIEW, AppsListAdapter.LAYOUT_TYPE_GRID);
 		int spanCount;
 		if (viewType == AppsListAdapter.LAYOUT_TYPE_GRID) {
-			spanCount = getResources().getConfiguration().screenWidthDp / 90;
+			spanCount = getResources().getConfiguration().screenWidthDp / 110;
 		} else {
 			spanCount = 1;
 			itemDecoration = new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL);
@@ -160,7 +160,7 @@ public class AppsListFragment extends Fragment implements MenuProvider {
 		layoutManager = new GridLayoutManager(requireContext(), spanCount);
 		requireActivity().addOnConfigurationChangedListener(configuration -> {
 			if (adapter.getItemViewType(0) == AppsListAdapter.LAYOUT_TYPE_GRID) {
-				layoutManager.setSpanCount(configuration.screenWidthDp / 90);
+				layoutManager.setSpanCount(configuration.screenWidthDp / 110);
 			}
 		});
 		binding.list.setLayoutManager(layoutManager);
@@ -392,7 +392,7 @@ public class AppsListFragment extends Fragment implements MenuProvider {
 			}
 			int spanCount;
 			if (viewType == AppsListAdapter.LAYOUT_TYPE_GRID) {
-				spanCount = getResources().getConfiguration().screenWidthDp / 90;
+				spanCount = getResources().getConfiguration().screenWidthDp / 110;
 				if (itemDecoration != null) {
 					binding.list.removeItemDecoration(itemDecoration);
 				}

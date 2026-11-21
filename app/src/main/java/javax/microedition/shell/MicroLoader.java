@@ -156,7 +156,7 @@ public class MicroLoader {
 		}
 		Map<String, String> attr = descriptor.getAttrs();
 		ErrorReporter errorReporter = ACRA.getErrorReporter();
-		String report = errorReporter.getCustomData(Constants.KEY_APPCENTER_ATTACHMENT);
+		String report = errorReporter.getCustomData(Constants.KEY_CRASH_ATTACHMENT);
 		StringBuilder sb = new StringBuilder();
 		if (report != null) {
 			sb.append(report).append("\n");
@@ -167,7 +167,7 @@ public class MicroLoader {
 		if (jarHash != null) {
 			sb.append("JAR_HASH_MD5").append(": ").append(jarHash);
 		}
-		errorReporter.putCustomData(Constants.KEY_APPCENTER_ATTACHMENT, sb.toString());
+		errorReporter.putCustomData(Constants.KEY_CRASH_ATTACHMENT, sb.toString());
 		MIDlet.initProps(attr);
 		for (int i = 1; ; i++) {
 			String v = attr.get("MIDlet-" + i);
