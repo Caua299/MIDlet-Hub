@@ -82,10 +82,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import ru.playsoftware.j2meloader.R;
 import ru.playsoftware.j2meloader.appsdb.AppRepository;
 import ru.playsoftware.j2meloader.config.Config;
@@ -99,6 +101,7 @@ import ru.playsoftware.j2meloader.settings.SettingsActivity;
 import ru.playsoftware.j2meloader.util.AppUtils;
 import ru.playsoftware.j2meloader.util.FileUtils;
 import ru.playsoftware.j2meloader.util.LogUtils;
+import ru.playsoftware.j2meloader.util.SaveSlots;
 import ru.woesss.j2me.installer.BatchInstallerDialog;
 import ru.woesss.j2me.installer.InstallerDialog;
 
@@ -348,11 +351,78 @@ public class AppsListFragment extends Fragment implements MenuProvider {
 			dialog.dismiss();
 			Config.startApp(requireActivity(), item.getTitle(), item.getPathExt(), true);
 		});
+		b.detailsSaves.setOnClickListener(v -> {
+			dialog.dismiss();
+			showSaves(item);
+		});
 		b.detailsFavorite.setOnClickListener(v -> {
 			dialog.dismiss();
 			appRepository.setFavorite(item.getId(), !item.isFavorite());
 		});
 		dialog.show();
+	}
+
+	private void showSaves(AppItem item) {
+		Context context = requireContext();
+		List<File> slots = SaveSlots.list(item);
+		AlertDialog.Builder builder = new AlertDialog.Builder(context)
+				.setTitle(getString(R.string.saves_title, item.getTitle()));
+		if (slots.isEmpty()) {
+			builder.setMessage(R.string.saves_empty);
+		} else {
+			String[] labels = new String[slots.size()];
+			for (int i = 0; i < labels.length; i++) {
+				labels[i] = SaveSlots.label(slots.get(i));
+			}
+			builder.setItems(labels, (d, which) -> showSlotActions(item, slots.get(which)));
+		}
+		builder.setPositiveButton(R.string.saves_create, (d, w) -> createSave(item))
+				.setNegativeButton(android.R.string.cancel, null)
+				.show();
+	}
+
+	private void showSlotActions(AppItem item, File slot) {
+		String[] actions = {getString(R.string.saves_restore), getString(R.string.action_context_delete)};
+		new AlertDialog.Builder(requireContext())
+				.setTitle(SaveSlots.label(slot))
+				.setItems(actions, (d, which) -> {
+					if (which == 0) {
+						confirmRestore(item, slot);
+					} else {
+						SaveSlots.delete(slot);
+						Toast.makeText(requireContext(), R.string.saves_deleted, Toast.LENGTH_SHORT).show();
+					}
+				})
+				.show();
+	}
+
+	private void confirmRestore(AppItem item, File slot) {
+		new AlertDialog.Builder(requireContext())
+				.setTitle(R.string.saves_restore)
+				.setMessage(R.string.saves_restore_confirm)
+				.setPositiveButton(android.R.string.ok, (d, w) ->
+						runSaveTask(() -> SaveSlots.restore(item, slot), R.string.saves_restored))
+				.setNegativeButton(android.R.string.cancel, null)
+				.show();
+	}
+
+	private void createSave(AppItem item) {
+		if (!SaveSlots.hasData(item)) {
+			Toast.makeText(requireContext(), R.string.saves_no_data, Toast.LENGTH_LONG).show();
+			return;
+		}
+		runSaveTask(() -> SaveSlots.create(item), R.string.saves_created);
+	}
+
+	private void runSaveTask(io.reactivex.functions.Action action, int successMsg) {
+		Context appContext = requireContext().getApplicationContext();
+		Completable.fromAction(action)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(() -> Toast.makeText(appContext, successMsg, Toast.LENGTH_SHORT).show(),
+						e -> Toast.makeText(appContext,
+								appContext.getString(R.string.error) + ": " + e.getMessage(),
+								Toast.LENGTH_LONG).show());
 	}
 
 	private void requestAddShortcut(AppItem appItem) {

@@ -172,4 +172,15 @@
     <string name="pref_category_appearance">Aparência</string>
     <string name="pref_category_game">Tela do jogo</string>
     <string name="pref_category_data">Dados e armazenamento</string>
+
+    <string name="details_saves">Pontos de save</string>
+    <string name="saves_title">Pontos de save: %1$s</string>
+    <string name="saves_empty">Nenhum ponto de save ainda. Salve dentro do jogo primeiro e depois toque em “Novo ponto de save” para guardar uma cópia do seu progresso.</string>
+    <string name="saves_create">Novo ponto de save</string>
+    <string name="saves_created">Ponto de save criado</string>
+    <string name="saves_no_data">Este jogo ainda não tem dados salvos. Salve dentro do jogo primeiro.</string>
+    <string name="saves_restore">Restaurar</string>
+    <string name="saves_restore_confirm">Isso substitui os dados salvos atuais do jogo por este ponto de save. Um ponto de save dos dados atuais é criado automaticamente antes. Feche o jogo antes de continuar.</string>
+    <string name="saves_restored">Ponto de save restaurado</string>
+    <string name="saves_deleted">Ponto de save apagado</string>
 </resources>
