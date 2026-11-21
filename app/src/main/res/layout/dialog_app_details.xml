@@ -60,6 +60,14 @@
         android:textColor="?attr/colorOnSurface"
         android:textSize="14sp" />
 
+    <TextView
+        android:id="@+id/details_play_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="14sp" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/details_play"
         android:layout_width="match_parent"

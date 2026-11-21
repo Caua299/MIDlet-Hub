@@ -231,4 +231,11 @@
     <string name="saves_restore_confirm">Isso substitui os dados salvos atuais do jogo por este ponto de save. Um ponto de save dos dados atuais é criado automaticamente antes. Feche o jogo antes de continuar.</string>
     <string name="saves_restored">Ponto de save restaurado</string>
     <string name="saves_deleted">Ponto de save apagado</string>
+
+    <string name="pref_app_sort_last_played">Último jogado</string>
+    <string name="details_play_time">Tempo jogado: %1$s</string>
+    <string name="pref_share_crash">Compartilhar último relatório de erro</string>
+    <string name="pref_share_crash_summary">Envie o relatório salvo ao desenvolvedor ou anexe em uma issue no GitHub</string>
+    <string name="crash_report_none">Nenhum relatório de erro encontrado</string>
+    <string name="crash_report_saved">Relatório salvo. Você pode compartilhá-lo em Configurações → Dados e armazenamento.</string>
 </resources>

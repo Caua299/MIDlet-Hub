@@ -96,6 +96,8 @@ import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.databinding.ActivityMicroBinding;
 import ru.playsoftware.j2meloader.util.Constants;
 import ru.playsoftware.j2meloader.util.LogUtils;
+import android.os.SystemClock;
+import ru.playsoftware.j2meloader.util.PlayTime;
 
 public class MicroActivity extends AppCompatActivity {
 	private static final int ORIENTATION_DEFAULT = 0;
@@ -118,6 +120,7 @@ public class MicroActivity extends AppCompatActivity {
 	private int toolbarHeight;
 	private int menuKey;
 	private String appPath;
+	private long playStart;
 
 	public ActivityMicroBinding binding;
 
@@ -224,6 +227,7 @@ public class MicroActivity extends AppCompatActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		playStart = SystemClock.elapsedRealtime();
 		visible = true;
 		if (!pauseSuppressed) {
 			MidletThread.resumeApp();
@@ -232,6 +236,10 @@ public class MicroActivity extends AppCompatActivity {
 
 	@Override
 	public void onPause() {
+		if (playStart > 0 && appPath != null) {
+			PlayTime.add(new File(appPath).getName(), SystemClock.elapsedRealtime() - playStart);
+		}
+		playStart = 0;
 		hideSoftInput();
 		if (!pauseSuppressed && !pauseDisabled) {
 			visible = false;

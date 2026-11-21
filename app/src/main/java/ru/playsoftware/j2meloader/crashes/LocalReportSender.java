@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import ru.playsoftware.j2meloader.R;
 import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.util.Constants;
 
@@ -43,7 +44,7 @@ public class LocalReportSender implements ReportSender {
 					fos.write(((String) od).getBytes(StandardCharsets.UTF_8));
 				}
 			}
-			Toast.makeText(context, "Report saved to:\n" + logFile, Toast.LENGTH_LONG).show();
+			Toast.makeText(context, R.string.crash_report_saved, Toast.LENGTH_LONG).show();
 		} catch (IOException e) {
 			e.printStackTrace();
 			Toast.makeText(context, "Can't save report!", Toast.LENGTH_LONG).show();

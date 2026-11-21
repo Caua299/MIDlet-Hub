@@ -120,6 +120,7 @@ public class AppUtils {
 		File appSaveDir = new File(Config.getDataDir(), item.getPath());
 		FileUtils.deleteDirectory(appSaveDir);
 		SaveSlots.deleteAll(item);
+		PlayTime.delete(item.getPath());
 		File appConfigsDir = new File(Config.getConfigsDir(), item.getPath());
 		FileUtils.deleteDirectory(appConfigsDir);
 	}

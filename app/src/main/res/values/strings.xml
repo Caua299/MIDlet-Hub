@@ -334,4 +334,11 @@
     <string name="saves_restore_confirm">This replaces the game’s current saved data with this save point. A save point of the current data is created automatically first. Close the game before continuing.</string>
     <string name="saves_restored">Save point restored</string>
     <string name="saves_deleted">Save point deleted</string>
+
+    <string name="pref_app_sort_last_played">Last played</string>
+    <string name="details_play_time">Time played: %1$s</string>
+    <string name="pref_share_crash">Share last error report</string>
+    <string name="pref_share_crash_summary">Send the saved error report to the developer or attach it to a GitHub issue</string>
+    <string name="crash_report_none">No error report found</string>
+    <string name="crash_report_saved">Report saved. You can share it in Settings → Data and storage.</string>
 </resources>
