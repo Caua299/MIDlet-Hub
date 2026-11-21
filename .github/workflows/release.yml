@@ -1,10 +1,12 @@
-name: Release (versão oficial)
+name: Release (oficial ou pré-lançamento)
 
+# Tag sem sufixo (v1.0.0)         -> versão oficial
+# Tag com sufixo (v1.1.0-beta.1)  -> pré-lançamento (assinado com a mesma chave)
 on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag da versão (ex.: v1.0.0)'
+        description: 'Tag da versão (ex.: v1.0.0 ou v1.1.0-beta.1)'
         required: true
         default: 'v1.0.0'
 
@@ -13,7 +15,7 @@ permissions:
 
 jobs:
   build-release:
-    name: Build e publicação da versão oficial
+    name: Build e publicação
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +24,45 @@ jobs:
         with:
           submodules: 'true'
           fetch-depth: 0
+
+      - name: Calcular versão a partir da tag
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          VER="${TAG#v}"
+          if [[ ! "$VER" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)(-[A-Za-z]+(\.([0-9]+))?)?$ ]]; then
+            echo "::error::Tag inválida: '$TAG'. Use o formato v1.0.0 ou v1.1.0-beta.1"
+            exit 1
+          fi
+          MAJOR=${BASH_REMATCH[1]}; MINOR=${BASH_REMATCH[2]}; PATCH=${BASH_REMATCH[3]}
+          SUFFIX=${BASH_REMATCH[4]}; N=${BASH_REMATCH[6]}
+          if [ -n "$SUFFIX" ]; then
+            STAGE=${N:-1}
+            if [ "$STAGE" -gt 98 ]; then STAGE=98; fi
+            IS_PRE=true; IS_LATEST=false
+          else
+            STAGE=99; IS_PRE=false; IS_LATEST=true
+          fi
+          CODE=$(( (10#$MAJOR * 10000 + 10#$MINOR * 100 + 10#$PATCH) * 100 + STAGE ))
+          echo "VERSION_NAME=$VER" >> "$GITHUB_ENV"
+          echo "VERSION_CODE=$CODE" >> "$GITHUB_ENV"
+          echo "IS_PRE=$IS_PRE" >> "$GITHUB_ENV"
+          echo "IS_LATEST=$IS_LATEST" >> "$GITHUB_ENV"
+          echo "Versão $VER (código $CODE), pré-lançamento: $IS_PRE"
+
+      - name: Escrever notas da release
+        run: |
+          if [ "$IS_PRE" = "true" ]; then
+            {
+              echo "## Pré-lançamento / Pre-release"
+              echo ""
+              echo "Versão de teste do MIDlet Hub, assinada com a mesma chave da versão oficial: instala por cima dela e mantém seus dados. Pode ter erros."
+              echo ""
+              echo "Test version of MIDlet Hub, signed with the same key as the official release: it installs over it and keeps your data. It may contain bugs."
+            } > /tmp/notes.md
+          else
+            cp RELEASE_NOTES.md /tmp/notes.md
+          fi
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -53,7 +94,8 @@ jobs:
       - name: Build do APK assinado
         run: |
           chmod +x gradlew
-          ./gradlew assembleStableRelease --stacktrace
+          ./gradlew assembleStableRelease --stacktrace \
+            -PappVersionName="$VERSION_NAME" -PappVersionCode="$VERSION_CODE"
 
       - name: Coletar APK
         run: |
@@ -73,9 +115,9 @@ jobs:
           tag: ${{ inputs.tag }}
           commit: ${{ github.sha }}
           name: MIDlet Hub ${{ inputs.tag }}
-          bodyFile: RELEASE_NOTES.md
-          prerelease: false
-          makeLatest: true
+          bodyFile: /tmp/notes.md
+          prerelease: ${{ env.IS_PRE }}
+          makeLatest: ${{ env.IS_LATEST }}
           allowUpdates: true
           removeArtifacts: true
           artifactErrorsFailBuild: true
