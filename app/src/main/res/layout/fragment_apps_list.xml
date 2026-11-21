@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingHorizontal="6dp"
+        android:paddingTop="60dp"
+        android:paddingBottom="88dp"
+        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:spanCount="4"
+        tools:itemCount="12"
+        tools:listitem="@layout/list_row_grid_jar"/>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
@@ -30,19 +43,6 @@
             android:layout_height="wrap_content"
             android:text="@string/tab_recent" />
     </com.google.android.material.tabs.TabLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingHorizontal="6dp"
-        android:paddingTop="60dp"
-        android:paddingBottom="88dp"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:spanCount="4"
-        tools:itemCount="12"
-        tools:listitem="@layout/list_row_grid_jar"/>
 
     <TextView
         android:id="@android:id/empty"
