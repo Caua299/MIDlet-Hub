@@ -323,4 +323,15 @@
     <string name="pref_category_appearance">Appearance</string>
     <string name="pref_category_game">Game screen</string>
     <string name="pref_category_data">Data and storage</string>
+
+    <string name="details_saves">Save points</string>
+    <string name="saves_title">Save points: %1$s</string>
+    <string name="saves_empty">No save points yet. Save inside the game first, then tap “New save point” to keep a copy of your progress.</string>
+    <string name="saves_create">New save point</string>
+    <string name="saves_created">Save point created</string>
+    <string name="saves_no_data">This game has no saved data yet. Save inside the game first.</string>
+    <string name="saves_restore">Restore</string>
+    <string name="saves_restore_confirm">This replaces the game’s current saved data with this save point. A save point of the current data is created automatically first. Close the game before continuing.</string>
+    <string name="saves_restored">Save point restored</string>
+    <string name="saves_deleted">Save point deleted</string>
 </resources>

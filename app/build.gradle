@@ -15,8 +15,8 @@ android {
         applicationId "io.github.caua299.midlethub"
         minSdk MIN_SDK
         targetSdk TARGET_SDK
-        versionCode 101
-        versionName "1.8.2"
+        versionCode 10000
+        versionName "1.0.0"
         resValue 'string', 'app_name', 'MIDlet Hub'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -84,6 +84,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
                     'proguard-rules.pro', 'proguard-common.pro'
         }
+        // versão oficial do MIDlet Hub (sem sufixo na versão)
+        stable {
+            buildConfigField 'boolean', 'FULL_EMULATOR', 'true'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro', 'proguard-common.pro'
+        }
         dev {
             buildConfigField 'boolean', 'FULL_EMULATOR', 'true'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
@@ -145,10 +151,12 @@ androidComponents {
                     variant.makeResValueKey('string', 'app_name'),
                     new ResValue('MIDlet Hub Debug', null))
         }
-        def baseName = variant.flavorName == 'midlet' ? "${midletArchivesBaseName}-" : "${rootProject.name}-"
+        def baseName = variant.flavorName == 'midlet' ? "${midletArchivesBaseName}-" : "MIDlet_Hub-"
         variant.outputs.each { output ->
             output.outputFileName.set(output.versionName.map { versionName ->
-                "${baseName}${versionName}-${variant.buildType}.apk"
+                (variant.flavorName == 'stable' && variant.buildType == 'release'
+                        ? "${baseName}${versionName}.apk"
+                        : "${baseName}${versionName}-${variant.buildType}.apk")
                         .replaceAll('--+', '-').replaceAll(' +', '_')
             })
         }

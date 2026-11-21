@@ -119,6 +119,7 @@ public class AppUtils {
 		FileUtils.deleteDirectory(appDir);
 		File appSaveDir = new File(Config.getDataDir(), item.getPath());
 		FileUtils.deleteDirectory(appSaveDir);
+		SaveSlots.deleteAll(item);
 		File appConfigsDir = new File(Config.getConfigsDir(), item.getPath());
 		FileUtils.deleteDirectory(appConfigsDir);
 	}
