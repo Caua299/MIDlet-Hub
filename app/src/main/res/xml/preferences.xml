@@ -76,11 +76,6 @@
             android:icon="@drawable/ic_setting_backup"
             android:summary="@string/pref_backup_summary"
             android:title="@string/pref_backup" />
-        <Preference
-            android:key="pref_share_crash"
-            android:icon="@drawable/ic_setting_share"
-            android:summary="@string/pref_share_crash_summary"
-            android:title="@string/pref_share_crash" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_category_experimental">
         <SwitchPreferenceCompat

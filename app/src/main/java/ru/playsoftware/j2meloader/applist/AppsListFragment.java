@@ -104,7 +104,6 @@ import ru.playsoftware.j2meloader.util.LogUtils;
 import ru.playsoftware.j2meloader.util.SaveSlots;
 import ru.woesss.j2me.installer.BatchInstallerDialog;
 import ru.woesss.j2me.installer.InstallerDialog;
-import ru.playsoftware.j2meloader.util.PlayTime;
 
 public class AppsListFragment extends Fragment implements MenuProvider {
 	private static final String TAG = AppsListFragment.class.getSimpleName();
@@ -339,8 +338,6 @@ public class AppsListFragment extends Fragment implements MenuProvider {
 		} else {
 			b.detailsLastPlayed.setText(R.string.details_never_played);
 		}
-		b.detailsPlayTime.setText(getString(R.string.details_play_time,
-				PlayTime.format(PlayTime.get(item.getPath()))));
 		b.detailsFavorite.setText(item.isFavorite()
 				? R.string.action_context_unfavorite : R.string.action_context_favorite);
 		BottomSheetDialog dialog = new BottomSheetDialog(context);

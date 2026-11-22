@@ -44,7 +44,7 @@ public class LocalReportSender implements ReportSender {
 					fos.write(((String) od).getBytes(StandardCharsets.UTF_8));
 				}
 			}
-			Toast.makeText(context, R.string.crash_report_saved, Toast.LENGTH_LONG).show();
+			Toast.makeText(context, context.getString(R.string.crash_report_saved, logFile), Toast.LENGTH_LONG).show();
 		} catch (IOException e) {
 			e.printStackTrace();
 			Toast.makeText(context, "Can't save report!", Toast.LENGTH_LONG).show();

@@ -51,10 +51,6 @@ import ru.playsoftware.j2meloader.config.Config;
 import ru.playsoftware.j2meloader.config.ProfilesActivity;
 import ru.playsoftware.j2meloader.util.FileUtils;
 import ru.playsoftware.j2meloader.util.PickDirResultContract;
-import android.widget.Toast;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.charset.StandardCharsets;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 	private static final String TAG = "SettingsFragment";
@@ -69,10 +65,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 		addPreferencesFromResource(R.xml.preferences);
 		initLanguages();
 		findPreference("pref_default_settings").setIntent(new Intent(requireActivity(), ProfilesActivity.class));
-		findPreference("pref_share_crash").setOnPreferenceClickListener(preference -> {
-			shareCrashReport();
-			return true;
-		});
 		findPreference("pref_backup").setOnPreferenceClickListener(preference -> {
 			Intent intent = new Intent(requireActivity(), BackupActivity.class);
 			startActivity(intent);
@@ -199,29 +191,5 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 				.putString(PREF_EMULATOR_DIR, path)
 				.apply();
 		prefFolder.setSummary(path);
-	}
-
-	private void shareCrashReport() {
-		Context context = requireContext();
-		File file = new File(Config.getEmulatorDir(), "crash.txt");
-		if (!file.isFile()) {
-			Toast.makeText(context, R.string.crash_report_none, Toast.LENGTH_LONG).show();
-			return;
-		}
-		try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
-			long len = raf.length();
-			long start = Math.max(0, len - 150000);
-			byte[] buf = new byte[(int) (len - start)];
-			raf.seek(start);
-			raf.readFully(buf);
-			String text = new String(buf, StandardCharsets.UTF_8);
-			Intent send = new Intent(Intent.ACTION_SEND);
-			send.setType("text/plain");
-			send.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + " - error report");
-			send.putExtra(Intent.EXTRA_TEXT, text);
-			startActivity(Intent.createChooser(send, getString(R.string.pref_share_crash)));
-		} catch (IOException e) {
-			Toast.makeText(context, getString(R.string.error) + ": " + e.getMessage(), Toast.LENGTH_LONG).show();
-		}
 	}
 }
