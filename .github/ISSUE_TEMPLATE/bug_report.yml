@@ -1,46 +1,76 @@
-name: Bug Report
-description: File a bug report
-labels: bug
+name: Relato de erro / Bug report
+description: Algo não funciona como deveria / Something is not working as expected
+title: "[Erro] "
+labels: ["bug"]
 body:
-  - type: input
-    id: emulator-version
+  - type: markdown
     attributes:
-      label: Emulator version
-      placeholder: "e.g. 1.7.9"
-    validations:
-      required: true
+      value: |
+        Obrigado por ajudar a melhorar o MIDlet Hub! Pode escrever em português ou em inglês.
+
+        Thanks for helping improve MIDlet Hub! You can write in Portuguese or English.
+
+        **Problema com um jogo específico que também falha no J2ME Loader original?** Ele provavelmente vem do emulador em si. Mesmo assim, pode relatar aqui.
   - type: input
-    id: game-version
+    id: app_version
     attributes:
-      label: Game version
-      placeholder: "e.g. 1.0.1"
-    validations:
-      required: true
-  - type: input
-    id: game-resolution
-    attributes:
-      label: Game resolution
-      placeholder: "e.g. 240x320"
+      label: Versão do app / App version
+      description: "Menu (três pontos) → Sobre / Menu (three dots) → About"
+      placeholder: "1.1.0-beta.1"
     validations:
       required: true
   - type: input
     id: device
     attributes:
-      label: Device
-      placeholder: "e.g. Samsung Galaxy S20"
+      label: Aparelho / Device
+      placeholder: "Samsung Galaxy A54, Xiaomi Redmi Note 12..."
     validations:
       required: true
   - type: input
-    id: android-version
+    id: android_version
     attributes:
-      label: Android version
-      placeholder: "e.g. Android 12"
+      label: Versão do Android / Android version
+      placeholder: "Android 14"
+    validations:
+      required: true
+  - type: input
+    id: game
+    attributes:
+      label: Jogo (nome e versão) / Game (name and version)
+      description: "Se o erro acontece só em um jogo. Deixe em branco se for no app em geral. / Only if the problem happens in one game. Leave empty if it is about the app in general."
+  - type: input
+    id: resolution
+    attributes:
+      label: Resolução do jogo / Game resolution
+      description: "Opcional. Ajuda em problemas de tela. / Optional. Helps with display issues."
+      placeholder: "240x320"
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: O que aconteceu? / What happened?
+      placeholder: "Descreva o erro. Se puder, anexe um print. / Describe the problem. Attach a screenshot if you can."
     validations:
       required: true
   - type: textarea
-    id: issue
+    id: steps
     attributes:
-      label: Description of the issue
-      description: What's the issue you encountered?
+      label: Como repetir o erro / Steps to reproduce
+      placeholder: |
+        1. Abra o app / Open the app
+        2. Toque em... / Tap...
+        3. O erro aparece / The error appears
     validations:
       required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: O que você esperava que acontecesse? / What did you expect to happen?
+  - type: textarea
+    id: logs
+    attributes:
+      label: Registro (opcional) / Log (optional)
+      description: |
+        Menu → "Salvar registro" / Menu → "Save log" cria o arquivo `log.txt` na pasta do app (`Android/data/io.github.caua299.midlethub/files/`). Se o app travou, há também o `crash.txt`. Cole o conteúdo aqui. Ele pode conter o nome do jogo e do aparelho, então revise antes de publicar.
+
+        Menu → "Save log" creates the `log.txt` file in the app folder (`Android/data/io.github.caua299.midlethub/files/`). If the app crashed, there is also a `crash.txt`. Paste its content here. It may contain the game and device names, so review it before posting.
+      render: text
